@@ -1,0 +1,45 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+buildscript {
+
+    repositories {
+        google()
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.0.1'
+
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+}
+
+allprojects {
+    repositories {
+        maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+        google()
+        jcenter()
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
+def createDir = {
+    path ->
+        File dir = new File(path)
+        if (!dir.exists()) {
+            dir.mkdirs()
+            println 'success'
+        }
+}
+task createMVPdir() {
+    def base = getProjectDir().getAbsolutePath() +
+            '/app/src/main/java/com/example/administrator/mvpdemo/mvp/'
+    def paths = [base + 'model', base + 'presenter', base + 'ui']
+    println base
+    doFirst {//手动调用task
+        println base
+        paths.forEach(createDir)
+    }
+}
